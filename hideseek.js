@@ -89,7 +89,7 @@ function compare() {
         message = "Hider Lose!";
     }
     else {
-        message = "Continue";
+        message = "Hider played " + hiderCard;
         startGame();
     }
 
