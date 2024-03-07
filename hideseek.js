@@ -36,9 +36,16 @@ function shuffleDeck(deck) {
 }
 
 function startGame() {
+    if (hideTurns <= 0) {
+        canHide = false;
+    }
+
     hidden = seekerdeck.pop();
     if (hidden == "Seek") {
         seekerSeek = true;
+    }
+    else {
+        seekerSeek = false;
     }
     console.log("Seeker drew", hidden)
     let cardImg = document.createElement("img");
@@ -63,9 +70,11 @@ function stand() {
 
 function hide() {
     if (!canHide) {
-        console.log ("You can't hide for more than 2 consecutive turns, Coward!")
+        message = "You can't hide for more than 2 consecutive turns, Coward!";
+        document.getElementById("results").innerText = message;
         return
     }
+    hideTurns = hideTurns - 1;
     hiderReveal = false;
     hiderCard = "Hide";
 
