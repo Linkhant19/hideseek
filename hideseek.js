@@ -5,6 +5,7 @@ var hidden;
 var seekerdeck;
 var hiderdeck;
 var hiderCard;
+var turnsLeft;
 
 var hideTurns = 2;
 var canHide = true;
@@ -14,6 +15,22 @@ window.onload = function() {
     buildHiderDeck();
     shuffleDeck(seekerdeck)
     shuffleDeck(hiderdeck)
+    turnsLeft = 10;
+    startGame();
+    document.getElementById("restart").addEventListener("click", restartGame);
+}
+
+function restartGame() {
+    buildSeekerDeck();
+    buildHiderDeck();
+    shuffleDeck(seekerdeck)
+    shuffleDeck(hiderdeck)
+    turnsLeft = 10;
+    hideTurns = 2;
+    canHide = true;
+    document.getElementById("stand").disabled = false;
+    document.getElementById("hide").disabled = false;
+    document.getElementById("results").innerText = "";
     startGame();
 }
 
@@ -36,6 +53,12 @@ function shuffleDeck(deck) {
 }
 
 function startGame() {
+    if (turnsLeft <= 0) {
+        message = "Turns Over! Hider Won!";
+        document.getElementById("results").innerText = message;
+        endGame();
+    }
+    document.getElementById("turns").innerText = turnsLeft;
     if (hideTurns <= 0) {
         canHide = false;
     }
@@ -53,12 +76,18 @@ function startGame() {
     cardImg.src = "./cards/" + card + ".png";
 
     document.getElementById("stand").addEventListener("click", stand);
-    document.getElementById("hide").addEventListener("click", hide)
+    document.getElementById("hide").addEventListener("click", hide);
 
+}
+
+function endGame() {
+    document.getElementById("stand").removeEventListener("click", stand);
+    document.getElementById("hide").removeEventListener("click", hide);
 }
 
 function stand() {
     hideTurns = 2;
+    canHide = true;
     let cardImg = document.createElement("img");
     hiderCard = hiderdeck.pop();
     cardImg.src = "./cards/" + hiderCard + ".png";
@@ -87,9 +116,13 @@ function compare() {
     let message = "";
     if (seekerSeek && hiderReveal) {
         message = "Hider Lose!";
+        document.getElementById("results").innerText = message;
+        endGame();
     }
     else {
         message = "Hider played " + hiderCard;
+        turnsLeft = turnsLeft - 1;
+        document.getElementById("turns").innerText = turnsLeft;
         startGame();
     }
 
