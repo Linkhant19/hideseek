@@ -11,8 +11,12 @@ var hideTurns = 2;
 var canHide = true;
 
 window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const deck = urlParams.get('deck'); 
+    console.log(deck);
+
     buildSeekerDeck();
-    buildHiderDeck();
+    buildHiderDeck(deck);
     shuffleDeck(seekerdeck)
     shuffleDeck(hiderdeck)
     turnsLeft = 10;
@@ -35,11 +39,19 @@ function restartGame() {
 }
 
 function buildSeekerDeck() {
-    seekerdeck = ["Seek", "Seek", "Nothing", "Nothing", "Nothing"]
+    seekerdeck = ["Seek", "Seek", "Nothing", "Nothing", "Nothing"];
 }
 
-function buildHiderDeck() {
-    hiderdeck = ["Nothing", "Shield", "Nothing"]
+function buildHiderDeck(deck) {
+    if (deck=="motherChick"){
+        hiderdeck = ["It's raining CHICKS!", 
+        "It's raining CHICKS!", 
+        "It's raining CHICKS!", 
+        "normal", "normal", "normal"];
+    }
+    else {
+        hiderdeck = ["Nothing", "Shield", "Nothing"];
+    }
 }
 
 function shuffleDeck(deck) {
