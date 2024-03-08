@@ -4,6 +4,7 @@ var hiderReveal = false; //if Seek and Reveal gets played in the same turn, hide
 var hidden;
 var seekerdeck;
 var hiderdeck;
+var truedeck;
 var hiderCard;
 var turnsLeft;
 
@@ -13,7 +14,8 @@ var canHide = true;
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     const deck = urlParams.get('deck'); 
-    console.log(deck);
+    truedeck = deck;
+    //this is how we get info from selection page.
 
     buildSeekerDeck();
     buildHiderDeck(deck);
@@ -26,9 +28,9 @@ window.onload = function() {
 
 function restartGame() {
     buildSeekerDeck();
-    buildHiderDeck();
-    shuffleDeck(seekerdeck)
-    shuffleDeck(hiderdeck)
+    buildHiderDeck(truedeck);
+    shuffleDeck(seekerdeck);
+    shuffleDeck(hiderdeck);
     turnsLeft = 10;
     hideTurns = 2;
     canHide = true;
@@ -76,6 +78,9 @@ function startGame() {
     }
 
     hidden = seekerdeck.pop();
+    buildSeekerDeck();
+    shuffleDeck(seekerdeck);
+
     if (hidden == "Seek") {
         seekerSeek = true;
     }
@@ -102,6 +107,9 @@ function stand() {
     canHide = true;
     let cardImg = document.createElement("img");
     hiderCard = hiderdeck.pop();
+    buildHiderDeck(truedeck);
+    shuffleDeck(hiderdeck);
+
     cardImg.src = "./cards/" + hiderCard + ".png";
     document.getElementById("hidercard").src = "./cards/" + hiderCard + ".png";
     hiderReveal = true;
