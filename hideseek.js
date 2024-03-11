@@ -56,7 +56,11 @@ function buildHiderDeck(deck) {
         hiderdeck = ["It's raining CHICKS!", 
         "It's raining CHICKS!", 
         "It's raining CHICKS!", 
-        "normal", "normal", "normal"];
+        "Normal", "Normal", "Normal"];
+    } else if (deck=="golem"){
+        hiderdeck = ["Normal", "Normal", "Normal",
+        "Healing Gem", "Healing Gem",
+        "Slam!", "Slam!", "Slam!"]
     }
     else {
         hiderdeck = ["Nothing", "Shield", "Nothing"];
@@ -116,6 +120,13 @@ function stand() {
     hiderCard = hiderdeck.pop();
     buildHiderDeck(truedeck);
     shuffleDeck(hiderdeck);
+    console.log("health", health);
+    console.log(hiderCard == "Healing Gem" && health < 2);
+
+    if (hiderCard == "Healing Gem" && health < 2) {
+        health = health + 1;
+        document.getElementById("health").innerText = health;
+    }
 
     cardImg.src = "./cards/" + hiderCard + ".png";
     document.getElementById("hidercard").src = "./cards/" + hiderCard + ".png";
