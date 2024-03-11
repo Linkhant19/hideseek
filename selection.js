@@ -1,15 +1,12 @@
 window.onload = function() {
     document.getElementById("motherChick").addEventListener("click", loadNextPage);
+    document.getElementById("dreamDamsel").addEventListener("click", loadDreamDamsel);
 }
 
 function loadNextPage() {
     window.location.href = "index.html?deck=motherChick";
 }
 
-window.onload = function() {
-    document.getElementById("dreamDamsel").addEventListener("click", loadNextPage);
-}
-
-function loadNextPage() {
+function loadDreamDamsel() {
     window.location.href = "index.html?deck=dreamDamsel";
 }
