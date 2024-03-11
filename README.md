@@ -4,7 +4,7 @@ This is a hide and seek card game I came up with in a dream, and I really wanted
 
 I am going to try to implement multiple roles and various cards with different roles. 
 
-Hider Classes: 
+**Hider Classes: **
 Golem: Golem excels in defending himself against the Seeker by healing or hiding amongst the crumbled rocks. 
 Deck = Normal x 3, Slam! x 3, Healing Gem x 2
 
@@ -12,10 +12,10 @@ Dream Damsel: Dream Damsel bends dreams into her will, allowing her to escape th
 Deck = Normal x 3, Nightmare x 3, Daydream x 2
 
 
-Seeker Classes: 
+**Seeker Classes: **
 
 
-Cards Details: 
+**Cards Details: **
 
 1. Normal : Normal card with no abilities. 
 
