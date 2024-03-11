@@ -4,6 +4,7 @@ var hiderReveal = false; // true while Hider not hiding
 
 var hidden; // Seeker's hidden card. Not visible to Hider
 var seekerdeck; 
+var simpleseekerdeck;
 var hiderdeck;
 var truedeck;  // Hider Character Selection Deck
 var hiderCard;  
@@ -51,11 +52,20 @@ function buildSeekerDeck() {
     seekerdeck = ["Seek", "Seek", "Nothing", "Nothing", "Nothing"];
 }
 
+function buildSimpleSeekerDeck() {
+    seekerdeck = ["Seek", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing"];
+}
+
 function buildHiderDeck(deck) {
     if (deck=="motherChick"){
         hiderdeck = ["It's raining CHICKS!", 
         "It's raining CHICKS!", 
         "It's raining CHICKS!", 
+        "normal", "normal", "normal"];
+    }
+    if (deck=="dreamDamsel"){
+        hiderdeck = ["Daydream", "Daydream",
+        "Nightmare", "Nightmare", "Nightmare",
         "normal", "normal", "normal"];
     }
     else {
@@ -74,6 +84,7 @@ function shuffleDeck(deck) {
 }
 
 function startGame() {
+    console.log(seekerdeck);
     
     document.getElementById("turns").innerText = turnsLeft;
     if (hideTurns <= 0) {
@@ -111,9 +122,18 @@ function stand() {
     hideTurns = 2;
     canHide = true;
     hiderReveal = true;
-
     let cardImg = document.createElement("img");
     hiderCard = hiderdeck.pop();
+
+    if (hiderCard == "Nightmare") {
+        buildSimpleSeekerDeck();
+    }
+
+    if (hiderCard == "Daydream") {
+        hiderReveal = false;
+    }
+
+
     buildHiderDeck(truedeck);
     shuffleDeck(hiderdeck);
 
