@@ -1,17 +1,14 @@
 window.onload = function() {
     document.getElementById("motherChick").addEventListener("click", loadMotherChick);
     document.getElementById("golem").addEventListener("click", loadGolem);
+    document.getElementById("dreamDamsel").addEventListener("click", loadDreamDamsel);
 }
 
 function loadMotherChick() {
     window.location.href = "index.html?deck=motherChick";
 }
 
-window.onload = function() {
-    document.getElementById("dreamDamsel").addEventListener("click", loadNextPage);
-}
-
-function loadNextPage() {
+function loadDreamDamsel() {
     window.location.href = "index.html?deck=dreamDamsel";
 }
 
