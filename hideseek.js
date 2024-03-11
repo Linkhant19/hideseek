@@ -64,12 +64,12 @@ function buildHiderDeck(deck) {
         "It's raining CHICKS!", 
         "Normal", "Normal", "Normal"];
     } 
-    if (deck=="golem"){
+    else if (deck=="golem"){
         hiderdeck = ["Normal", "Normal", "Normal",
         "Healing Gem", "Healing Gem",
         "Slam!", "Slam!", "Slam!"]
     }
-    if (deck=="dreamDamsel"){
+    else if (deck=="dreamDamsel"){
         hiderdeck = ["Daydream", "Daydream",
         "Nightmare", "Nightmare", "Nightmare",
         "normal", "normal", "normal"];
