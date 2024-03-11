@@ -37,6 +37,8 @@ function restartGame() {
     document.getElementById("stand").disabled = false;
     document.getElementById("hide").disabled = false;
     document.getElementById("results").innerText = "";
+    document.getElementById("seeker-card").innerText = "";
+    document.getElementById("hider-card").innerText = "";
     startGame();
 }
 
@@ -67,11 +69,9 @@ function shuffleDeck(deck) {
 }
 
 function startGame() {
-    if (turnsLeft <= 0) {
-        message = "Turns Over! Hider Won!";
-        document.getElementById("results").innerText = message;
-        endGame();
-    }
+    console.log("turnsLeft: ", turnsLeft);
+    console.log(turnsLeft <= 0);
+    
     document.getElementById("turns").innerText = turnsLeft;
     if (hideTurns <= 0) {
         canHide = false;
@@ -105,6 +105,7 @@ function endGame() {
 function stand() {
     hideTurns = 2;
     canHide = true;
+    hiderReveal = true;
     let cardImg = document.createElement("img");
     hiderCard = hiderdeck.pop();
     buildHiderDeck(truedeck);
@@ -112,7 +113,7 @@ function stand() {
 
     cardImg.src = "./cards/" + hiderCard + ".png";
     document.getElementById("hidercard").src = "./cards/" + hiderCard + ".png";
-    hiderReveal = true;
+    
 
     compare();
 }
@@ -132,23 +133,33 @@ function hide() {
 
 function compare() {
     document.getElementById("hidden").src = "./cards/" + hidden + ".png";
+    document.getElementById("seeker-card").innerText = hidden;
+    document.getElementById("hider-card").innerText = hiderCard;
 
     let message = "";
+    console.log("seekerSeek", seekerSeek);
+    console.log("hiderReveal", hiderReveal);
     if (seekerSeek && hiderReveal) {
         message = "Hider Lose!";
         document.getElementById("results").innerText = message;
         endGame();
     }
     else {
-        message = "Hider played " + hiderCard;
         turnsLeft = turnsLeft - 1;
         document.getElementById("turns").innerText = turnsLeft;
-        startGame();
+        if (turnsLeft <= 0) {
+            message = "Turns Over! Hider Won!";
+            document.getElementById("results").innerText = message;
+            endGame();
+        } else {
+            message = "Hider played " + hiderCard;
+            document.getElementById("results").innerText = message;
+            
+            startGame();
+        }
     }
-
-    document.getElementById("seeker-card").innerText = hidden;
-    document.getElementById("hider-card").innerText = hiderCard;
-    document.getElementById("results").innerText = message;
+    
+    
 }
 
 
