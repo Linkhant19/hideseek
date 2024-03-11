@@ -19,9 +19,10 @@ window.onload = function() {
     const deck = urlParams.get('deck'); 
     truedeck = deck;
     //this is how we get info from selection page.
+    console.log(truedeck);
 
     buildSeekerDeck();
-    buildHiderDeck(deck);
+    buildHiderDeck(truedeck);
     shuffleDeck(seekerdeck);
     shuffleDeck(hiderdeck);
     turnsLeft = 20;
@@ -62,7 +63,8 @@ function buildHiderDeck(deck) {
         "It's raining CHICKS!", 
         "It's raining CHICKS!", 
         "Normal", "Normal", "Normal"];
-    } else if (deck=="golem"){
+    } 
+    if (deck=="golem"){
         hiderdeck = ["Normal", "Normal", "Normal",
         "Healing Gem", "Healing Gem",
         "Slam!", "Slam!", "Slam!"]
