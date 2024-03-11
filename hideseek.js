@@ -1,15 +1,17 @@
-var seekerSeek = false;
-var hiderReveal = false; //if Seek and Reveal gets played in the same turn, hider loses a life. 
+var seekerSeek = false; // true if Seek card gets played
+var hiderReveal = false; // true while Hider not hiding
+// if Seek and Reveal gets played in the same turn, hider loses a life. 
 
-var hidden;
-var seekerdeck;
+var hidden; // Seeker's hidden card. Not visible to Hider
+var seekerdeck; 
 var hiderdeck;
-var truedeck;
-var hiderCard;
-var turnsLeft;
+var truedeck;  // Hider Character Selection Deck
+var hiderCard;  
+var turnsLeft;  // Turns left to win
+var health = 2;
 
-var hideTurns = 2;
-var canHide = true;
+var hideTurns = 2; // number of consecutive hide turns left
+var canHide = true; // if hideTurns > 0, Hider canHide
 
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -19,9 +21,10 @@ window.onload = function() {
 
     buildSeekerDeck();
     buildHiderDeck(deck);
-    shuffleDeck(seekerdeck)
-    shuffleDeck(hiderdeck)
-    turnsLeft = 10;
+    shuffleDeck(seekerdeck);
+    shuffleDeck(hiderdeck);
+    turnsLeft = 20;
+    document.getElementById("health").innerText = 2;
     startGame();
     document.getElementById("restart").addEventListener("click", restartGame);
 }
@@ -31,14 +34,16 @@ function restartGame() {
     buildHiderDeck(truedeck);
     shuffleDeck(seekerdeck);
     shuffleDeck(hiderdeck);
-    turnsLeft = 10;
+    turnsLeft = 20;
     hideTurns = 2;
+    health = 2;
     canHide = true;
     document.getElementById("stand").disabled = false;
     document.getElementById("hide").disabled = false;
     document.getElementById("results").innerText = "";
     document.getElementById("seeker-card").innerText = "";
     document.getElementById("hider-card").innerText = "";
+    document.getElementById("health").innerText = health;
     startGame();
 }
 
@@ -69,14 +74,14 @@ function shuffleDeck(deck) {
 }
 
 function startGame() {
-    console.log("turnsLeft: ", turnsLeft);
-    console.log(turnsLeft <= 0);
     
     document.getElementById("turns").innerText = turnsLeft;
     if (hideTurns <= 0) {
         canHide = false;
     }
 
+
+    // part where Seeker chooses card
     hidden = seekerdeck.pop();
     buildSeekerDeck();
     shuffleDeck(seekerdeck);
@@ -106,6 +111,7 @@ function stand() {
     hideTurns = 2;
     canHide = true;
     hiderReveal = true;
+
     let cardImg = document.createElement("img");
     hiderCard = hiderdeck.pop();
     buildHiderDeck(truedeck);
@@ -122,7 +128,7 @@ function hide() {
     if (!canHide) {
         message = "You can't hide for more than 2 consecutive turns, Coward!";
         document.getElementById("results").innerText = message;
-        return
+        return;
     }
     hideTurns = hideTurns - 1;
     hiderReveal = false;
@@ -137,29 +143,27 @@ function compare() {
     document.getElementById("hider-card").innerText = hiderCard;
 
     let message = "";
-    console.log("seekerSeek", seekerSeek);
-    console.log("hiderReveal", hiderReveal);
-    if (seekerSeek && hiderReveal) {
-        message = "Hider Lose!";
+    
+    turnsLeft = turnsLeft - 1;
+    document.getElementById("turns").innerText = turnsLeft;
+    if (turnsLeft <= 0) {
+        message = "Turns Over! Hider Won!";
         document.getElementById("results").innerText = message;
         endGame();
-    }
-    else {
-        turnsLeft = turnsLeft - 1;
-        document.getElementById("turns").innerText = turnsLeft;
-        if (turnsLeft <= 0) {
-            message = "Turns Over! Hider Won!";
+    } else if (seekerSeek && hiderReveal) {
+        health = health - 1;
+        document.getElementById("health").innerText = health;
+        if (health <= 0) {
+            message = "Hider Lose!";
             document.getElementById("results").innerText = message;
             endGame();
-        } else {
-            message = "Hider played " + hiderCard;
-            document.getElementById("results").innerText = message;
-            
-            startGame();
         }
+    } else {
+        message = "Hider played " + hiderCard;
+        document.getElementById("results").innerText = message;
+        
+        startGame();
     }
-    
-    
 }
 
 
