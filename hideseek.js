@@ -135,20 +135,17 @@ function stand() {
         buildSimpleSeekerDeck();
     }
 
-    if (hiderCard == "Daydream") {
+    if (hiderCard == "Daydream") { // Daydream needs to be fixed later to avoid other effects too. 
         hiderReveal = false;
     }
-
-
-    buildHiderDeck(truedeck);
-    shuffleDeck(hiderdeck);
-    console.log("health", health);
-    console.log(hiderCard == "Healing Gem" && health < 2);
 
     if (hiderCard == "Healing Gem" && health < 2) {
         health = health + 1;
         document.getElementById("health").innerText = health;
     }
+
+    buildHiderDeck(truedeck);
+    shuffleDeck(hiderdeck);
 
     cardImg.src = "./cards/" + hiderCard + ".png";
     document.getElementById("hidercard").src = "./cards/" + hiderCard + ".png";
