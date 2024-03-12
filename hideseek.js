@@ -7,6 +7,7 @@ var seekerdeck;
 var simpleseekerdeck; // 1 seek card, 9 nothing cards
 var hiderdeck;
 var truedeck;  // Hider Character Selection Deck
+var trueSeeker; // Seeker Selection Deck
 var hiderCard;  
 var turnsLeft;  // Turns left to win
 var health = 2;
@@ -21,9 +22,10 @@ window.onload = function() {
     const deck = urlParams.get('deck'); 
     truedeck = deck;
     //this is how we get info from selection page.
-    console.log(truedeck);
+    const Seeker = localStorage.getItem('Seeker');
+    trueSeeker = Seeker;
 
-    buildSeekerDeck();
+    buildSeekerDeck(trueSeeker);
     buildHiderDeck(truedeck);
     shuffleDeck(seekerdeck);
     shuffleDeck(hiderdeck);
@@ -34,7 +36,7 @@ window.onload = function() {
 }
 
 function restartGame() {
-    buildSeekerDeck();
+    buildSeekerDeck(trueSeeker);
     buildHiderDeck(truedeck);
     shuffleDeck(seekerdeck);
     shuffleDeck(hiderdeck);
@@ -52,8 +54,16 @@ function restartGame() {
     startGame();
 }
 
-function buildSeekerDeck() {
-    seekerdeck = ["Seek", "Seek", "Nothing", "Nothing", "Nothing"];
+function buildSeekerDeck(seeker) {
+    if (seeker == "death") {
+        seekerdeck = ["Seek", "Seek", "Seek", 
+        "Normal", "Normal",
+        "Death Mark", 
+        "Die, Die, Die!", "Die, Die, Die!", 
+        "Void", "Void", "Void"]
+    } else {
+        seekerdeck = ["Seek", "Seek", "Nothing", "Nothing", "Nothing"];
+    }
 }
 
 function buildSimpleSeekerDeck() {
@@ -110,7 +120,7 @@ function startGame() {
     
     // part where Seeker chooses card
     hidden = seekerdeck.pop();
-    buildSeekerDeck();
+    buildSeekerDeck(trueSeeker);
     shuffleDeck(seekerdeck);
 
     if (hidden == "Seek") {

@@ -3,11 +3,21 @@ body {
     text-align: center;
 }
 
-#motherChick {
+#golem {
     width: 100px;
     height: 50px;
     border-radius: 20px;
-    background-color: yellow;
+    background-color: grey;
+    color: black;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#dreamDamsel {
+    width: 100px;
+    height: 50px;
+    border-radius: 20px;
+    background-color: rgb(104, 52, 207);
     color: black;
     font-size: 20px;
     font-family: 'Courier New', Courier, monospace;

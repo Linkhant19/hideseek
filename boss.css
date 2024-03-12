@@ -1,0 +1,14 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+#death {
+    width: 100px;
+    height: 50px;
+    border-radius: 20px;
+    background-color: rgb(255, 0, 0);
+    color: black;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
