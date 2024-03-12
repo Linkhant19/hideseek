@@ -19,7 +19,7 @@ Cards Details:
 
 1. Normal : Normal card with no abilities. 
 
-2. Slam! : 
+2. Slam! : Insert a permanant Normal card into Seeker's hand. 
 
 3. Healing Gem : Heal 1 health. Heal none if health is at max. 
 

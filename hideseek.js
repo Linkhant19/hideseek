@@ -4,7 +4,7 @@ var hiderReveal = false; // true while Hider not hiding
 
 var hidden; // Seeker's hidden card. Not visible to Hider
 var seekerdeck; 
-var simpleseekerdeck;
+var simpleseekerdeck; // 1 seek card, 9 nothing cards
 var hiderdeck;
 var truedeck;  // Hider Character Selection Deck
 var hiderCard;  
@@ -13,6 +13,8 @@ var health = 2;
 
 var hideTurns = 2; // number of consecutive hide turns left
 var canHide = true; // if hideTurns > 0, Hider canHide
+
+var extraNormal = 0;
 
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -39,6 +41,7 @@ function restartGame() {
     turnsLeft = 20;
     hideTurns = 2;
     health = 2;
+    extraNormal = 0;
     canHide = true;
     document.getElementById("stand").disabled = false;
     document.getElementById("hide").disabled = false;
@@ -90,14 +93,21 @@ function shuffleDeck(deck) {
 }
 
 function startGame() {
-    console.log(seekerdeck);
     
     document.getElementById("turns").innerText = turnsLeft;
     if (hideTurns <= 0) {
         canHide = false;
     }
 
+    if (extraNormal > 0) {
+        for(let i = 0; i < extraNormal; i++) {
+            seekerdeck.push("Normal");
+        }
+    }
+    shuffleDeck(seekerdeck);
 
+    console.log(seekerdeck);
+    
     // part where Seeker chooses card
     hidden = seekerdeck.pop();
     buildSeekerDeck();
@@ -144,6 +154,10 @@ function stand() {
         document.getElementById("health").innerText = health;
     }
 
+    if (hiderCard == "Slam!") {
+        extraNormal = extraNormal + 1;
+    }
+
     buildHiderDeck(truedeck);
     shuffleDeck(hiderdeck);
 
@@ -176,6 +190,7 @@ function compare() {
     
     turnsLeft = turnsLeft - 1;
     document.getElementById("turns").innerText = turnsLeft;
+
     if (turnsLeft <= 0) {
         message = "Turns Over! Hider Won!";
         document.getElementById("results").innerText = message;
