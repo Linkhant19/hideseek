@@ -1,5 +1,6 @@
 var seekerSeek = false; // true if Seek card gets played
 var hiderReveal = false; // true while Hider not hiding
+var ISeeYou = false;
 // if Seek and Reveal gets played in the same turn, hider loses a life. 
 
 var hidden; // Seeker's hidden card. Not visible to Hider
@@ -45,6 +46,7 @@ function restartGame() {
     health = 2;
     extraNormal = 0;
     canHide = true;
+    ISeeYou = false;
     document.getElementById("stand").disabled = false;
     document.getElementById("hide").disabled = false;
     document.getElementById("results").innerText = "";
@@ -70,6 +72,10 @@ function buildSimpleSeekerDeck() {
     seekerdeck = ["Seek", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing", "Nothing"];
 }
 
+function buildThirdEyeSeekerDeck() {
+    seekerdeck = ["Nothing", "Nothing", "Nothing", "Nothing", "Nothing"];
+}
+
 function buildHiderDeck(deck) {
     if (deck=="motherChick"){
         hiderdeck = ["It's raining CHICKS!", 
@@ -85,6 +91,11 @@ function buildHiderDeck(deck) {
     else if (deck=="dreamDamsel"){
         hiderdeck = ["Daydream", "Daydream",
         "Nightmare", "Nightmare", "Nightmare",
+        "normal", "normal", "normal"];
+    }
+    else if (deck=="sight"){
+        hiderdeck = ["Third Eye", "Third Eye",
+        "I See You", "I See You", "I See You",
         "normal", "normal", "normal"];
     }
     else {
@@ -103,12 +114,13 @@ function shuffleDeck(deck) {
 }
 
 function startGame() {
+
+    let message = ""
     
     document.getElementById("turns").innerText = turnsLeft;
     if (hideTurns <= 0) {
         canHide = false;
     }
-
     if (extraNormal > 0) {
         for(let i = 0; i < extraNormal; i++) {
             seekerdeck.push("Normal");
@@ -129,6 +141,17 @@ function startGame() {
     else {
         seekerSeek = false;
     }
+
+    if (ISeeYou) {
+        message = "Seeker is Going to Play " + hidden;
+        document.getElementById("results").innerText = message;
+        document.getElementById("results").style.color = "blue";
+    }  else if (seekerSeek && hiderReveal && hiderCard === "I See You") {
+        message = "Seeker is Going to Play " + hidden;
+        document.getElementById("results").innerText = message;
+        document.getElementById("results").style.color = "blue";
+    }
+
     console.log("Seeker drew", hidden)
     let cardImg = document.createElement("img");
     let card = hidden;
@@ -168,6 +191,14 @@ function stand() {
         extraNormal = extraNormal + 1;
     }
 
+    if (hiderCard == "I See You") { 
+        ISeeYou = true;  
+    }
+
+    if (hiderCard == "Third Eye") {
+        buildThirdEyeSeekerDeck();   
+    }
+
     buildHiderDeck(truedeck);
     shuffleDeck(hiderdeck);
 
@@ -194,6 +225,7 @@ function hide() {
 function compare() {
     document.getElementById("hidden").src = "./cards/" + hidden + ".png";
     document.getElementById("seeker-card").innerText = hidden;
+    document.getElementById("results").style.color = "black";
     document.getElementById("hider-card").innerText = hiderCard;
 
     let message = "";
@@ -212,13 +244,14 @@ function compare() {
             message = "Hider Lose!";
             document.getElementById("results").innerText = message;
             endGame();
-        }
+        } 
     } else {
         message = "Hider played " + hiderCard;
         document.getElementById("results").innerText = message;
         
         startGame();
     }
+    ISeeYou = false;
 }
 
 
