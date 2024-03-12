@@ -26,3 +26,7 @@ Deck = Normal x 3, Nightmare x 3, Daydream x 2
 4. Nightmare : For the next turn, Seeker's deck will be modified with 10% of Seek card and 90% chance of Normal card. 
 
 5. Daydream : Hides inside a daydream. No cards will have effect on you this turn. 
+
+6. I See You : Reveals the Seeker's next turn.
+
+7. Third Eye : Forces the Seeker to draw a Normal card for the next turn.
