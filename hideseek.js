@@ -73,7 +73,7 @@ function buildSimpleSeekerDeck() {
 }
 
 function buildThirdEyeSeekerDeck() {
-    seekerdeck = ["Nothing", "Nothing", "Nothing", "Nothing", "Nothing"];
+    seekerdeck = ["Nothing"];
 }
 
 function buildHiderDeck(deck) {
