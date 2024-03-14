@@ -1,7 +1,9 @@
 var seekerSeek = false; // true if Seek card gets played
 var hiderReveal = false; // true while Hider not hiding
-var ISeeYou = false;
 // if Seek and Reveal gets played in the same turn, hider loses a life. 
+
+var ISeeYou = false;
+var oneShotKill = 0; 
 
 var hidden; // Seeker's hidden card. Not visible to Hider
 var seekerdeck; 
@@ -47,6 +49,7 @@ function restartGame() {
     extraNormal = 0;
     canHide = true;
     ISeeYou = false;
+    oneShotKill = 0;
     document.getElementById("stand").disabled = false;
     document.getElementById("hide").disabled = false;
     document.getElementById("results").innerText = "";
@@ -137,9 +140,15 @@ function startGame() {
 
     if (hidden == "Seek") {
         seekerSeek = true;
+        if (oneShotKill > 0) {
+            // the first time Seek is drawn, oneShotKill will be still active. 
+            // the second time Seek is drawn, oneShotKill will be 0. 
+            oneShotKill = oneShotKill - 1; 
+        }
     }
     else {
         seekerSeek = false;
+        seekerCardAbility(hidden);
     }
 
     if (ISeeYou) {
@@ -160,6 +169,12 @@ function startGame() {
     document.getElementById("stand").addEventListener("click", stand);
     document.getElementById("hide").addEventListener("click", hide);
 
+}
+
+function seekerCardAbility(hidden) {
+    if (hidden == "Die, Die, Die!") {
+        oneShotKill = 2;
+    }
 }
 
 function endGame() {
@@ -238,7 +253,11 @@ function compare() {
         document.getElementById("results").innerText = message;
         endGame();
     } else if (seekerSeek && hiderReveal) {
-        health = health - 1;
+        if (oneShotKill > 0) {
+            health = health - 99;
+        } else {
+            health = health - 1;
+        }
         document.getElementById("health").innerText = health;
         if (health <= 0) {
             message = "Hider Lose!";

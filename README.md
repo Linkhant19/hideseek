@@ -18,8 +18,10 @@ Deck = Normal x 3, I See You x 3, Third Eye x 2
 
 **Seeker Classes: **
 
+Death: 
 
-**Cards Details: **
+
+** Hider Cards Details: **
 
 1. Normal : Normal card with no abilities. 
 
@@ -34,3 +36,13 @@ Deck = Normal x 3, I See You x 3, Third Eye x 2
 6. I See You : Reveals the Seeker's next turn.
 
 7. Third Eye : Forces the Seeker to draw a Normal card for the next turn.
+
+
+
+** Seeker Cards Details: **
+
+1. Normal: Normal card with no abilities. 
+
+2. Die, Die, Die!: The next Seek card drawn will be enhanced and will insta-kill the Hider if caught. 
+
+3. 
